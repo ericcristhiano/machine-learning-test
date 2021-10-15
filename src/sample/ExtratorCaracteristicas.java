@@ -21,18 +21,21 @@ import org.opencv.imgproc.Imgproc;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import java.awt.*;
+
+
 public class ExtratorCaracteristicas {
     public static double[] extraiCaracteristicas(File f, boolean exibeImagem) {
 
         double[] caracteristicas = new double[7];
 
-        double laranjaCamisaBart = 0;
-        double azulCalcaoBart = 0;
-        double azulSapatoBart = 0;
-        double azulCalcaHomer = 0;
-        double marromBocaHomer = 0;
-        double cinzaSapatoHomer = 0;
-
+    	double laranjaLaranja = 0;
+        double amareloLimao = 0;
+        double verdeLaranja = 0;
+        double verdeLimao = 0;
+        double brancoLaranja = 0;
+        double brancoLimao = 0;
+    	
         Image img = new Image(f.toURI().toString());
         PixelReader pr = img.getPixelReader();
 
@@ -51,137 +54,143 @@ public class ExtratorCaracteristicas {
                 double g = cor.getGreen()*255;
                 double b = cor.getBlue()*255;
 
-                if(isCamisaLaranjaBart(r, g, b)) {
-                    laranjaCamisaBart++;
-                    imagemProcessada.put(i, j, new double[]{0, 255, 128});
-                }
-                if(i>(h/2) && isCalcaoAzulBart(r, g, b)) {
-                    azulCalcaoBart++;
-                    imagemProcessada.put(i, j, new double[]{0, 255, 128});
-                }
-                if (i > (h/2 + h/3) && isSapatoBart(r, g, b)) {
-                    azulSapatoBart++;
-                    imagemProcessada.put(i, j, new double[]{0, 255, 128});
-                }
-                if(isCalcaAzulHomer(r, g, b)) {
-                    azulCalcaHomer++;
-                    imagemProcessada.put(i, j, new double[]{0, 255, 255});
-                }
-                if(i < (h/2 + h/3) && isBocaHomer(r, g, b)) {
-                    marromBocaHomer++;
-                    imagemProcessada.put(i, j, new double[]{0, 255, 255});
-                }
-                if (i > (h/2 + h/3) && isSapatoHomer(r, g, b)) {
-                    cinzaSapatoHomer++;
-                    imagemProcessada.put(i, j, new double[]{0, 255, 255});
-                }
-
+                double[] processadoCorLaranja = new double[]{0, 255, 128};
+                double[] processadoCorLimao = new double[]{0, 255, 255};
+                
+            	if (isLaranjaLaranja(r, g, b)) {
+            		laranjaLaranja++;
+            		imagemProcessada.put(i, j, processadoCorLaranja);
+            	}
+            	
+            	if (isAmareloLimao(r, g, b)) {
+            		amareloLimao++;
+            		imagemProcessada.put(i, j, processadoCorLimao);
+            	}
+            	
+            	if (isVerdeLaranja(r, g, b)) {
+            		verdeLaranja++;
+            		imagemProcessada.put(i, j, processadoCorLaranja);
+            	}
+            	
+    			if (isVerdeLimao(r, g, b)) {
+    				verdeLimao++;
+    				imagemProcessada.put(i, j, processadoCorLimao);
+    			}
+    			
+				if (isBrancoLaranja(r, g, b)) {
+					brancoLaranja++;
+					imagemProcessada.put(i, j, processadoCorLaranja);
+				}
+				
+				if (isBrancoLimao(r, g, b)) {
+					brancoLimao++;
+					imagemProcessada.put(i, j, processadoCorLimao);
+				}
+            	
             }
         }
 
-        // Normaliza as características pelo número de pixels totais da imagem para %
-        laranjaCamisaBart = (laranjaCamisaBart / (w * h)) * 100;
-        azulCalcaoBart = (azulCalcaoBart / (w * h)) * 100;
-        azulSapatoBart = (azulSapatoBart / (w * h)) * 100;
-        azulCalcaHomer = (azulCalcaHomer / (w * h)) * 100;
-        marromBocaHomer = (marromBocaHomer / (w * h)) * 100;
-        cinzaSapatoHomer = (cinzaSapatoHomer / (w * h)) * 100;
+        // Normaliza as caracterÃ­sticas pelo nÃºmero de pixels totais da imagem para %
+        laranjaLaranja = (laranjaLaranja / (w * h)) * 100;
+        amareloLimao = (amareloLimao / (w * h)) * 100;
+        verdeLaranja = (verdeLaranja / (w * h)) * 100;
+        verdeLimao = (verdeLimao / (w * h)) * 100;
+        brancoLaranja = (brancoLaranja / (w * h)) * 100;
+        brancoLimao = (brancoLimao / (w * h)) * 100;
 
-        caracteristicas[0] = laranjaCamisaBart;
-        caracteristicas[1] = azulCalcaoBart;
-        caracteristicas[2] = azulSapatoBart;
-        caracteristicas[3] = azulCalcaHomer;
-        caracteristicas[4] = marromBocaHomer;
-        caracteristicas[5] = cinzaSapatoHomer;
-        //APRENDIZADO SUPERVISIONADO - JÁ SABE QUAL A CLASSE NAS IMAGENS DE TREINAMENTO
-        caracteristicas[6] = f.getName().charAt(0)=='b'?0:1;
+        caracteristicas[0] = laranjaLaranja;
+        caracteristicas[1] = amareloLimao;
+        caracteristicas[2] = verdeLaranja;
+        caracteristicas[3] = verdeLimao;
+        caracteristicas[4] = brancoLaranja;
+        caracteristicas[5] = brancoLimao;
+        //APRENDIZADO SUPERVISIONADO - JÃ� SABE QUAL A CLASSE NAS IMAGENS DE TREINAMENTO
+        caracteristicas[6] = f.getName().charAt(0)=='l'?0:1;
 
         if(exibeImagem) {
             Imshow im = new Imshow("Title");
             im.showImage(imagemOriginal);
             HighGui.imshow("Imagem original", imagemOriginal);
-//            HighGui.imshow("Imagem processada", imagemProcessada);
-//
+            HighGui.imshow("Imagem processada", imagemProcessada);
             HighGui.waitKey(0);
         }
 
         return caracteristicas;
     }
 
-    public static boolean isCamisaLaranjaBart(double r, double g, double b) {
-        if (b >= 7 && b <= 90 &&  g >= 70 && g <= 105 &&  r >= 200 && r <= 255) {
-            return true;
-        }
-        return false;
-    }
-    public static boolean isCalcaoAzulBart(double r, double g, double b) {
-        if (b >= 125 && b <= 170 &&  g >= 5 && g <= 125 &&  r >= 0 && r <= 20) {
-            return true;
-        }
-        return false;
-    }
-    public static boolean isSapatoBart(double r, double g, double b) {
-        if (b >= 125 && b <= 140 &&  g >= 3 && g <= 12 &&  r >= 5 && r <= 20) {
-            return true;
-        }
-        return false;
-    }
-    public static boolean isCalcaAzulHomer(double r, double g, double b) {
-        if (b >= 150 && b <= 180 &&  g >= 98 && g <= 120 &&  r >= 0 && r <= 90) {
-            return true;
-        }
-        return false;
-    }
-    public static boolean isBocaHomer(double r, double g, double b) {
-        if (b >= 95 && b <= 140 &&  g >= 160 && g <= 185 &&  r >= 175 && r <= 200) {
-            return true;
-        }
-        return false;
-    }
-    public static boolean isSapatoHomer(double r, double g, double b) {
-        if (b >= 25 && b <= 45 &&  g >= 25 && g <= 45 &&  r >= 25 && r <= 45) {
-            return true;
-        }
-        return false;
+    public static boolean isLaranjaLaranja(double r, double g, double b) {
+    	float[] hsb = java.awt.Color.RGBtoHSB((int) r, (int) g, (int) b, null);
+
+    	float h = hsb[0] * 360;
+    	float newb = hsb[2] * 100;
+    	
+        return h < 26 && h > 15 && newb > 50; 
     }
 
+    public static boolean isAmareloLimao(double r, double g, double b) {
+    	float[] hsb = java.awt.Color.RGBtoHSB((int) r, (int) g, (int) b, null);
+    	float h = hsb[0] * 360;
+    	float newb = hsb[2] * 100;
+    	
+        return h < 75 && h > 37 && newb > 50;
+    }
+    
+    public static boolean isVerdeLaranja(double r, double g, double b) {
+    	return false;
+    }
+    
+    public static boolean isBrancoLaranja(double r, double g, double b) {
+    	return false;
+    }
+    
+    
+    
+    public static boolean isVerdeLimao(double r, double g, double b) {
+    	return false;
+    }
+    
+    public static boolean isBrancoLimao(double r, double g, double b) {
+    	return false;
+    }
+    
     public static void extrair(boolean exibeImagem) {
 
         // Cabeçalho do arquivo Weka
         String exportacao = "@relation caracteristicas\n\n";
-        exportacao += "@attribute laranja_camisa_bart real\n";
-        exportacao += "@attribute azul_calcao_bart real\n";
-        exportacao += "@attribute azul_sapato_bart real\n";
-        exportacao += "@attribute marrom_boca_homer real\n";
-        exportacao += "@attribute azul_calca_homer real\n";
-        exportacao += "@attribute cinza_sapato_homer real\n";
-        exportacao += "@attribute classe {Bart, Homer}\n\n";
+        exportacao += "@attribute laranjaLaranja real\n";
+        exportacao += "@attribute amareloLimao real\n";
+        exportacao += "@attribute verdeLaranja real\n";
+        exportacao += "@attribute verdeLimao real\n";
+        exportacao += "@attribute brancoLaranja real\n";
+        exportacao += "@attribute brancoLimao real\n";
+        exportacao += "@attribute classe {Limao, Laranja}\n\n";
         exportacao += "@data\n";
 
-        // Diretório onde estão armazenadas as imagens
+        // DiretÃ³rio onde estÃ£o armazenadas as imagens
         File diretorio = new File("src/imagens");
         File[] arquivos = diretorio.listFiles();
 
         System.out.println(arquivos.length);
 
-        // Definição do vetor de características
+        // DefiniÃ§Ã£o do vetor de caracterÃ­sticas
         double[][] caracteristicas = new double[293][7];
 
-        // Percorre todas as imagens do diretório
+        // Percorre todas as imagens do diretÃ³rio
         int cont = -1;
         for (File imagem : arquivos) {
             cont++;
             System.out.println(cont);
+           
             caracteristicas[cont] = extraiCaracteristicas(imagem, exibeImagem);
 
-            String classe = caracteristicas[cont][6] == 0 ?"Bart":"Homer";
+            String classe = caracteristicas[cont][6] == 0 ?"Limao":"Laranja";
 
-            System.out.println("Laranja camisa Bart: " + caracteristicas[cont][0]
-                    + " - Azul calção Bart: " + caracteristicas[cont][1]
-                    + " - Azul sapato Bart: " + caracteristicas[cont][2]
-                    + " - Azul calça Homer: " + caracteristicas[cont][3]
-                    + " - Marrom boca Homer: " + caracteristicas[cont][4]
-                    + " - Preto sapato Homer: " + caracteristicas[cont][5]
+            System.out.println("laranjaLaranja: " + caracteristicas[cont][0]
+                    + " - amareloLimao: " + caracteristicas[cont][1]
+                    + " - verdeLaranja: " + caracteristicas[cont][2]
+                    + " - verdeLimao: " + caracteristicas[cont][3]
+                    + " - brancoLaranja: " + caracteristicas[cont][4]
+                    + " - brancoLimao: " + caracteristicas[cont][5]
                     + " - Classe: " + classe);
 
             exportacao += caracteristicas[cont][0] + ","

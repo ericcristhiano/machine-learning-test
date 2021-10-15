@@ -12,6 +12,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        
+        float[] hsb = java.awt.Color.RGBtoHSB((int) 207, (int) 124, (int) 56, null);
+        
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Machine Learning app");
         primaryStage.setScene(new Scene(root, 1000, 600));

@@ -25,7 +25,7 @@ public class Controller {
 
     @FXML
     public void extrair() {
-        ExtratorCaracteristicas.extrair(true);
+        ExtratorCaracteristicas.extrair(false);
     }
 
     //MÉTODO QUE CHAMA O ALGORITMO
@@ -33,8 +33,8 @@ public class Controller {
     public void classificar() {
         //*********Naive Bayes
         double[] nb = AprendizagemBayesiana.naiveBayes(caracteristicasImgSel);
-        naiveBayesBart.setText("Bart: "+df.format(nb[0])+"%");
-        naiveBayesHomer.setText("Homer: "+df.format(nb[1])+"%");
+        naiveBayesBart.setText("Limao: "+df.format(nb[0])+"%");
+        naiveBayesHomer.setText("Laranja: "+df.format(nb[1])+"%");
     }
 
     //gui para carregar imagem na tela (e extrair caracteristicas dela)*********************************
@@ -47,12 +47,12 @@ public class Controller {
             imageView.setFitWidth(img.getWidth());
             imageView.setFitHeight(img.getHeight());
             caracteristicasImgSel = ExtratorCaracteristicas.extraiCaracteristicas(f, false);
-            bartLaranjaCamisa.setText("Laranja Camisa: "+df.format(caracteristicasImgSel[0]));
-            bartAzulCalcao.setText("Azul Calção: "   +df.format(caracteristicasImgSel[1]));
-            bartAzulSapato.setText("Azul Sapato: "   +df.format(caracteristicasImgSel[2]));
-            homerAzulCalca.setText("Azul Calça: "    +df.format(caracteristicasImgSel[3]));
-            homerMarromBoca.setText("Marrom Boca: "   +df.format(caracteristicasImgSel[4]));
-            homerPretoSapato.setText("Preto Sapato: "  +df.format(caracteristicasImgSel[5]));
+            bartLaranjaCamisa.setText("Laranja Laranja: "+df.format(caracteristicasImgSel[0]));
+            bartAzulCalcao.setText("amareloLimao: "   +df.format(caracteristicasImgSel[1]));
+            bartAzulSapato.setText("verdeLaranja: "   +df.format(caracteristicasImgSel[2]));
+            homerAzulCalca.setText("verdeLimao: "    +df.format(caracteristicasImgSel[3]));
+            homerMarromBoca.setText("brancoLaranja: "   +df.format(caracteristicasImgSel[4]));
+            homerPretoSapato.setText("brancoLimao: "  +df.format(caracteristicasImgSel[5]));
         }
     }
 
