@@ -36,8 +36,6 @@ public class AprendizagemBayesiana {
             novo.setValue(1, caracteristicas[1]);
             novo.setValue(2, caracteristicas[2]);
             novo.setValue(3, caracteristicas[3]);
-            novo.setValue(4, caracteristicas[4]);
-            novo.setValue(5, caracteristicas[5]);
 
             retorno = nb.distributionForInstance(novo);
 
