@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-import javafx.scene.image.ImageView;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.Size;
@@ -20,8 +19,6 @@ import org.opencv.imgproc.Imgproc;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-
-import java.awt.*;
 
 
 public class ExtratorCaracteristicas {
@@ -54,25 +51,30 @@ public class ExtratorCaracteristicas {
                 double g = cor.getGreen()*255;
                 double b = cor.getBlue()*255;
 
+                float[] hsb = java.awt.Color.RGBtoHSB((int) r, (int) g, (int) b, null);
+                
+                float hsbh = hsb[0] * 360;
+            	float hsbb = hsb[2] * 100;
+            	
                 double[] processadoCorLaranja = new double[]{0, 255, 128};
                 double[] processadoCorLimao = new double[]{0, 255, 255};
                 
-            	if (isLaranjaLaranja(r, g, b)) {
+            	if (isLaranjaLaranja(hsbh, hsbb)) {
             		laranjaLaranja++;
             		imagemProcessada.put(i, j, processadoCorLaranja);
             	}
             	
-            	if (isAmareloLimao(r, g, b)) {
+            	if (isAmareloLimao(hsbh, hsbb)) {
             		amareloLimao++;
             		imagemProcessada.put(i, j, processadoCorLimao);
             	}
             	
-            	if (isVerdeLaranja(r, g, b)) {
+            	if (isVerdeLaranja(hsbh, hsbb)) {
             		verdeLaranja++;
             		imagemProcessada.put(i, j, processadoCorLaranja);
             	}
             	
-    			if (isVerdeLimao(r, g, b)) {
+    			if (isVerdeLimao(hsbh, hsbb)) {
     				verdeLimao++;
     				imagemProcessada.put(i, j, processadoCorLimao);
     			}
@@ -82,7 +84,7 @@ public class ExtratorCaracteristicas {
 					imagemProcessada.put(i, j, processadoCorLaranja);
 				}
 				
-				if (isBrancoLimao(r, g, b)) {
+				if (isBrancoLimao(hsbh, hsbb)) {
 					brancoLimao++;
 					imagemProcessada.put(i, j, processadoCorLimao);
 				}
@@ -118,26 +120,27 @@ public class ExtratorCaracteristicas {
         return caracteristicas;
     }
 
-    public static boolean isLaranjaLaranja(double r, double g, double b) {
-    	float[] hsb = java.awt.Color.RGBtoHSB((int) r, (int) g, (int) b, null);
-
-    	float h = hsb[0] * 360;
-    	float newb = hsb[2] * 100;
-    	
-        return h < 26 && h > 15 && newb > 50; 
+    public static boolean isLaranjaLaranja(float h, float b) {
+        return h < 26 && h > 15 && b > 50; 
     }
 
-    public static boolean isAmareloLimao(double r, double g, double b) {
-    	float[] hsb = java.awt.Color.RGBtoHSB((int) r, (int) g, (int) b, null);
-    	float h = hsb[0] * 360;
-    	float newb = hsb[2] * 100;
-    	
-        return h < 75 && h > 37 && newb > 50;
+    public static boolean isAmareloLimao(float h, float b) {
+        return h < 75 && h > 37 && b > 50;
     }
     
-    public static boolean isVerdeLaranja(double r, double g, double b) {
+    public static boolean isVerdeLimao(float h, float b) {
+    	return h > 65 && h < 88 && b > 55 && b < 70;
+    }
+    
+    public static boolean isVerdeLaranja(float h, float b) {
+    	return h > 65 && h < 118 && b < 50 && b > 28;
+    }
+    
+    public static boolean isBrancoLimao(float h, float b) {
     	return false;
     }
+    
+
     
     public static boolean isBrancoLaranja(double r, double g, double b) {
     	return false;
@@ -145,13 +148,6 @@ public class ExtratorCaracteristicas {
     
     
     
-    public static boolean isVerdeLimao(double r, double g, double b) {
-    	return false;
-    }
-    
-    public static boolean isBrancoLimao(double r, double g, double b) {
-    	return false;
-    }
     
     public static void extrair(boolean exibeImagem) {
 
