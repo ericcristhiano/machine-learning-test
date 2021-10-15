@@ -30,8 +30,6 @@ public class ExtratorCaracteristicas {
         double amareloLimao = 0;
         double verdeLaranja = 0;
         double verdeLimao = 0;
-        double brancoLaranja = 0;
-        double brancoLimao = 0;
     	
         Image img = new Image(f.toURI().toString());
         PixelReader pr = img.getPixelReader();
@@ -78,17 +76,6 @@ public class ExtratorCaracteristicas {
     				verdeLimao++;
     				imagemProcessada.put(i, j, processadoCorLimao);
     			}
-    			
-				if (isBrancoLaranja(r, g, b)) {
-					brancoLaranja++;
-					imagemProcessada.put(i, j, processadoCorLaranja);
-				}
-				
-				if (isBrancoLimao(hsbh, hsbb)) {
-					brancoLimao++;
-					imagemProcessada.put(i, j, processadoCorLimao);
-				}
-            	
             }
         }
 
@@ -97,15 +84,11 @@ public class ExtratorCaracteristicas {
         amareloLimao = (amareloLimao / (w * h)) * 100;
         verdeLaranja = (verdeLaranja / (w * h)) * 100;
         verdeLimao = (verdeLimao / (w * h)) * 100;
-        brancoLaranja = (brancoLaranja / (w * h)) * 100;
-        brancoLimao = (brancoLimao / (w * h)) * 100;
 
         caracteristicas[0] = laranjaLaranja;
         caracteristicas[1] = amareloLimao;
         caracteristicas[2] = verdeLaranja;
         caracteristicas[3] = verdeLimao;
-        caracteristicas[4] = brancoLaranja;
-        caracteristicas[5] = brancoLimao;
         //APRENDIZADO SUPERVISIONADO - JÃ� SABE QUAL A CLASSE NAS IMAGENS DE TREINAMENTO
         caracteristicas[6] = f.getName().charAt(0)=='l'?0:1;
 
@@ -136,19 +119,6 @@ public class ExtratorCaracteristicas {
     	return h > 65 && h < 118 && b < 50 && b > 28;
     }
     
-    public static boolean isBrancoLimao(float h, float b) {
-    	return false;
-    }
-    
-
-    
-    public static boolean isBrancoLaranja(double r, double g, double b) {
-    	return false;
-    }
-    
-    
-    
-    
     public static void extrair(boolean exibeImagem) {
 
         // Cabeçalho do arquivo Weka
@@ -157,8 +127,6 @@ public class ExtratorCaracteristicas {
         exportacao += "@attribute amareloLimao real\n";
         exportacao += "@attribute verdeLaranja real\n";
         exportacao += "@attribute verdeLimao real\n";
-        exportacao += "@attribute brancoLaranja real\n";
-        exportacao += "@attribute brancoLimao real\n";
         exportacao += "@attribute classe {Limao, Laranja}\n\n";
         exportacao += "@data\n";
 
@@ -185,16 +153,12 @@ public class ExtratorCaracteristicas {
                     + " - amareloLimao: " + caracteristicas[cont][1]
                     + " - verdeLaranja: " + caracteristicas[cont][2]
                     + " - verdeLimao: " + caracteristicas[cont][3]
-                    + " - brancoLaranja: " + caracteristicas[cont][4]
-                    + " - brancoLimao: " + caracteristicas[cont][5]
                     + " - Classe: " + classe);
 
             exportacao += caracteristicas[cont][0] + ","
                     + caracteristicas[cont][1] + ","
                     + caracteristicas[cont][2] + ","
                     + caracteristicas[cont][3] + ","
-                    + caracteristicas[cont][4] + ","
-                    + caracteristicas[cont][5] + ","
                     + classe + "\n";
         }
 

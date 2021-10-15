@@ -51,8 +51,6 @@ public class Controller {
             bartAzulCalcao.setText("amareloLimao: "   +df.format(caracteristicasImgSel[1]));
             bartAzulSapato.setText("verdeLaranja: "   +df.format(caracteristicasImgSel[2]));
             homerAzulCalca.setText("verdeLimao: "    +df.format(caracteristicasImgSel[3]));
-            homerMarromBoca.setText("brancoLaranja: "   +df.format(caracteristicasImgSel[4]));
-            homerPretoSapato.setText("brancoLimao: "  +df.format(caracteristicasImgSel[5]));
         }
     }
 
