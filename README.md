@@ -10,6 +10,7 @@ Esta é uma aplicação utilizada para extrair características e classificar im
 2. Execute o arquivo `Main.java` para iniciar a aplicação.
 3. Clique em `Extração de características` e aguarde a finalização do processo.
 4. Finalizado o processo, haverá um novo arquivo na raíz do projeto chamado `caracteristicas.arff`.
+
 https://user-images.githubusercontent.com/5599514/137820880-0d05900c-e5a9-4ffb-a308-19ceb04919f1.mp4
 
 ### Como classificar uma imagem
