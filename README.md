@@ -9,9 +9,11 @@ Esta é uma aplicação utilizada para extrair características e classificar im
 1. Na pasta `src/imagens` há as imagens de treinamento. Imagens iniciando com a letra `l` são consideradas limão e qualquer outra letra são consideradas laranja. Adicione/remova imagens conforme necessário.
 2. Execute o arquivo `Main.java` para iniciar a aplicação.
 3. Clique em `Extração de características` e aguarde a finalização do processo.
-4. Finalizado o processo, haverá um novo arquivo na raíz do projeto chamado `caracteristicas.arff`.
+4. Como debug, no terminal as características de cada imagem serão exibidas.
 
 https://user-images.githubusercontent.com/5599514/137820880-0d05900c-e5a9-4ffb-a308-19ceb04919f1.mp4
+
+5. Finalizado o processo, haverá um novo arquivo na raíz do projeto chamado `caracteristicas.arff`.
 
 ### Como classificar uma imagem
 
