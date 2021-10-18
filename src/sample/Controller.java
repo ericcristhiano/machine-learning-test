@@ -10,15 +10,13 @@ import java.io.File;
 import java.text.DecimalFormat;
 
 public class Controller {
-    @FXML private Label bartLaranjaCamisa;
-    @FXML private Label bartAzulCalcao;
-    @FXML private Label bartAzulSapato;
-    @FXML private Label homerAzulCalca;
-    @FXML private Label homerMarromBoca;
-    @FXML private Label homerPretoSapato;
+    @FXML private Label laranjaLaranja;
+    @FXML private Label amareloLimao;
+    @FXML private Label verdeLaranja;
+    @FXML private Label verdeLimao;
     @FXML private ImageView imageView;
-    @FXML private Label naiveBayesBart;
-    @FXML private Label naiveBayesHomer;
+    @FXML private Label naiveBayesLimao;
+    @FXML private Label naiveBayesLaranja;
 
     double[] caracteristicasImgSel = {0,0,0,0,0,0};
     DecimalFormat df = new DecimalFormat("##0.0000");
@@ -33,8 +31,8 @@ public class Controller {
     public void classificar() {
         //*********Naive Bayes
         double[] nb = AprendizagemBayesiana.naiveBayes(caracteristicasImgSel);
-        naiveBayesBart.setText("Limao: "+df.format(nb[0])+"%");
-        naiveBayesHomer.setText("Laranja: "+df.format(nb[1])+"%");
+        naiveBayesLimao.setText("Limão: "+df.format(nb[0])+"%");
+        naiveBayesLaranja.setText("Laranja: "+df.format(nb[1])+"%");
     }
 
     //gui para carregar imagem na tela (e extrair caracteristicas dela)*********************************
@@ -47,10 +45,10 @@ public class Controller {
             imageView.setFitWidth(img.getWidth());
             imageView.setFitHeight(img.getHeight());
             caracteristicasImgSel = ExtratorCaracteristicas.extraiCaracteristicas(f, false);
-            bartLaranjaCamisa.setText("Laranja Laranja: "+df.format(caracteristicasImgSel[0]));
-            bartAzulCalcao.setText("amareloLimao: "   +df.format(caracteristicasImgSel[1]));
-            bartAzulSapato.setText("verdeLaranja: "   +df.format(caracteristicasImgSel[2]));
-            homerAzulCalca.setText("verdeLimao: "    +df.format(caracteristicasImgSel[3]));
+            laranjaLaranja.setText("Laranja: "+df.format(caracteristicasImgSel[0]));
+            amareloLimao.setText("Amarelo: "   +df.format(caracteristicasImgSel[1]));
+            verdeLaranja.setText("Verde: "   +df.format(caracteristicasImgSel[2]));
+            verdeLimao.setText("Verde: "    +df.format(caracteristicasImgSel[3]));
         }
     }
 
