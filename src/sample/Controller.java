@@ -17,6 +17,8 @@ public class Controller {
     @FXML private ImageView imageView;
     @FXML private Label naiveBayesLimao;
     @FXML private Label naiveBayesLaranja;
+    @FXML private Label arvoresDecisaoLimao;
+    @FXML private Label arvoresDecisaoLaranja;
 
     double[] caracteristicasImgSel = {0,0,0,0,0,0};
     DecimalFormat df = new DecimalFormat("##0.0000");
@@ -33,6 +35,9 @@ public class Controller {
         double[] nb = AprendizagemBayesiana.naiveBayes(caracteristicasImgSel);
         naiveBayesLimao.setText("Limão: "+df.format(nb[0])+"%");
         naiveBayesLaranja.setText("Laranja: "+df.format(nb[1])+"%");
+        double[] ab = ArvoresDeDecisao.j48(caracteristicasImgSel);
+        arvoresDecisaoLimao.setText("Limão: "+df.format(ab[0])+"%");
+        arvoresDecisaoLaranja.setText("Laranja: "+df.format(ab[1])+"%");
     }
 
     //gui para carregar imagem na tela (e extrair caracteristicas dela)*********************************

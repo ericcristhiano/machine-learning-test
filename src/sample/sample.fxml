@@ -139,6 +139,31 @@
                   <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                </VBox.margin>
             </TitledPane>
+            <TitledPane animated="false" layoutX="14.0" layoutY="230.0" text="Classificação por Árvores de decisão (J48)">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox layoutX="21.4" layoutY="20.4" prefHeight="135.0" prefWidth="327.0" AnchorPane.bottomAnchor="-114.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Label fx:id="arvoresDecisaoLimao" text="Limão:">
+                                 <VBox.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </VBox.margin>
+                              </Label>
+                              <Label fx:id="arvoresDecisaoLaranja" text="Laranja:">
+                                 <VBox.margin>
+                                    <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </AnchorPane>
+               </content>
+               <VBox.margin>
+                  <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+               </VBox.margin>
+            </TitledPane>
          </children>
       </VBox>
    </right>
